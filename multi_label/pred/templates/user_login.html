@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+
+<body>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <p>
+        <button type="submit" class="btn">登录</button>
+    </p>
+    <p>
+        <button class="active"><a href="/pred/register/">没有账号？去注册</a></button>
+    </p>
+</form>
+{% if messages %}
+<script>
+    {% for msg in messages %}
+        alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+{% endif %}
+</body>
+</html>
