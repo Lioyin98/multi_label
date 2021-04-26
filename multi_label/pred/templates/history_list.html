@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block bar %}
+      <div class="col-md-9" style=  "justify-content: flex-end;">
+            <h1 class="page-header">历史记录</h1>
+        <div class="panel panel-primary">
+                <!-- Default panel contents -->
+        <div class="panel-heading">查看当前用户的历史识别记录<i class="fa fa-thumb-tack pull-right"></i></div>
+            <div  class="panel-body">
+                 <!-
+            </div>
+      </div>
+{% endblock %}
+
+{% block main %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>
+        患者id <input type="text" name="patient_id" value="{{patient_id}}">
+    </p>
+    <p>
+        患者姓名 <input type="text" name="patient_name" value="{{patient_name}}">
+    </p>
+    <p>
+        <button type="submit" class="btn">检索</button>
+    </p>
+</form>
+<table class = "table table-hover table-bordered">
+    <thead>
+    <tr>
+        <th>患者id</th>
+        <th>患者姓名</th>
+        <th>影像种类</th>
+        <th>影像名称</th>
+        <th>影像图片</th>
+        <th>识别结果</th>
+        <th>识别时间</th>
+        <th>备注</th>
+    </tr>
+    </thead>
+ <tbody>
+    {% for history_obj in history_obj_list  %}
+        <tr>
+            <td>{{ history_obj.patient_id }}</td>
+            <td>{{ history_obj.patient_name }}</td>
+            <td>{{ history_obj.img_type }}</td>
+            <td>{{ history_obj.photo.name }}</td>
+            <td><img src = "/uploads/{{history_obj.photo.name}}", height="100", width="100" /></td>
+            <td>{{ history_obj.pred_result }}</td>
+            <td>{{ history_obj.pred_time|date:"Y-m-d H:i:s" }}</td>
+            <td>{{ history_obj.note }}</td>
+ </tr>
+  {% endfor %}
+</tbody>
+</table>
+{% if messages %}
+<script>
+    {% for msg in messages %}
+        alert('{{ msg.message }}');
+    {% endfor %}
+</script>
+{% endif %}
+{% endblock %}
