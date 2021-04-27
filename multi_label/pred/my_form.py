@@ -38,7 +38,10 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(min_length=6, label="密码", widget=forms.PasswordInput())
 
     def clean(self):
-        password = models.User.objects.get(user_name=self.cleaned_data.get('user_name')).password
+        user_filter = models.User.objects.filter(user_name=self.cleaned_data.get('user_name'))
+        if len(user_filter) == 0:
+            raise ValidationError('用户不存在')
+        password = user_filter[0].password
         if getMd5Passwd(self.cleaned_data.get('password')) != password:
             raise ValidationError('密码错误')
         else:
