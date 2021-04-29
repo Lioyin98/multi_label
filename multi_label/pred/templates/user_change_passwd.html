@@ -1,31 +1,31 @@
 {% extends "base.html" %}
 
-{% block bar %}
-      <div class="col-md-9" style=  "justify-content: flex-end;">
-            <h1 class="page-header">修改密码</h1>
-        <div class="panel panel-primary">
-                <!-- Default panel contents -->
-        <div class="panel-heading">修改当前用户的密码<i class="fa fa-thumb-tack pull-right"></i></div>
-            <div  class="panel-body">
-                 <!-
-            </div>
-      </div>
-{% endblock %}
-
-
 {% block main %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <p>
-        <button type="submit" class="btn">修改</button>
-    </p>
-</form>
+
+<div class="col-md-4 col-md-offset-4">
+    <h1 class="page-header">修改密码</h1>
+    <div class="panel panel-primary">
+        <div class="panel-heading">修改当前登录用户的密码</div>
+        <div class="panel-body">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form.as_p}}
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-primary btn-lg"><span
+                            class="glyphicon glyphicon-wrench"></span> 修改
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% if messages %}
 <script>
     {% for msg in messages %}
-        alert('{{ msg.message }}');
+    alert('{{ msg.message }}');
     {% endfor %}
 </script>
 {% endif %}
+
 {% endblock %}

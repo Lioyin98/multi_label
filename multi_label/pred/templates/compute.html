@@ -1,34 +1,69 @@
 {% extends "base.html" %}
 
-{% block bar %}
-      <div class="col-md-9" style=  "justify-content: flex-end;">
-            <h1 class="page-header">影像识别</h1>
-        <div class="panel panel-primary">
-                <!-- Default panel contents -->
-        <div class="panel-heading">上传眼科影像并识别病变体征<i class="fa fa-thumb-tack pull-right"></i></div>
-            <div  class="panel-body">
-                 <!-
-            </div>
-      </div>
-{% endblock %}
-
-
 {% block main %}
-    <form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-        {{form.as_p}}
-   <p>
-        <button type="submit" class="btn">识别</button>
-    </p>
-    </form>
-        <p>上传图片为： {{photo.name}}</p>
-        <img src = "/uploads/{{photo.name}}", height="200", width="200" />
-        <p>识别结果：{{labels}}</p>
+
+<style>
+    #id_img_type, #id_img_type li {
+        display: inline;
+    }
+
+    #id_img_type li:last-child {
+        margin-left: 30px;
+    }
+
+    form p:nth-of-type(3) {
+        display: inline;
+    }
+
+    form p:nth-of-type(5) {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="col-md-10 col-md-offset-1">
+    <h1 class="page-header">影像识别</h1>
+    <div class="panel panel-primary">
+        <div class="panel-heading">上传眼科影像并识别病变体征</div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div class="col-md-4">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-primary btn-lg"><span
+                            class="glyphicon glyphicon-play"></span> 识别</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6 col-md-offset-2">
+                    <div id="show_result" style="display:none">
+                        <div>上传影像名称： {{photo.name}}</div>
+                        <div>
+                            影像预览：
+                            <img src="/uploads/{{photo.name}}" , height="400" , width="400"/>
+                        </div>
+                        <div>识别出的体征：{{labels}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if labels %}
+<script>
+    document.getElementById("show_result").style.display = "block"
+</script>
+{% endif %}
+
 {% if messages %}
 <script>
     {% for msg in messages %}
-        alert('{{ msg.message }}');
+    alert('{{ msg.message }}');
     {% endfor %}
 </script>
 {% endif %}
+
 {% endblock %}

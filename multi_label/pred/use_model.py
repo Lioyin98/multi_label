@@ -135,5 +135,5 @@ def multi_label_classify(photo, img_type):
             labels.append(cols[i])
     str_labels = ",".join(labels)
     if len(str_labels) == 0:
-        return "未识别出体征"
+        return "未识别出病变体征"
     return str_labels

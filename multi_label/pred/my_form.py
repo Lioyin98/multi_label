@@ -11,17 +11,24 @@ def getMd5Passwd(password):
 
 
 class UploadImageForm(forms.Form):
-    patient_id = forms.CharField(label="患者id")
-    patient_name = forms.CharField(label="患者姓名")
-    img_type = forms.ChoiceField(label="影像类别", choices=(("OCT", "OCT"), ("fundus", "fundus")))
-    note = forms.CharField(label="备注", required=False)
-    photo = forms.ImageField(label='请上传一张影像:')
+    patient_id = forms.CharField(label="患者id",
+                                 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '输入患者id'}))
+    patient_name = forms.CharField(label="患者姓名",
+                                   widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '输入患者姓名'}))
+    img_type = forms.ChoiceField(label="影像类别", choices=(("OCT", "OCT"), ("fundus", "fundus")),
+                                 widget=forms.RadioSelect())
+    photo = forms.ImageField(label='上传一张影像')
+    note = forms.CharField(label="备注", required=False,
+                           widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '备注（可为空）'}))
 
 
 class UserRegisterForm(forms.Form):
-    user_name = forms.CharField(min_length=3, label="用户名")
-    password = forms.CharField(min_length=6, label="输入密码", widget=forms.PasswordInput())
-    repeat_password = forms.CharField(min_length=6, label="重复密码", widget=forms.PasswordInput())
+    user_name = forms.CharField(min_length=3, label="用户名",
+                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '输入用户名'}))
+    password = forms.CharField(min_length=6, label="密码",
+                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '输入密码'}))
+    repeat_password = forms.CharField(min_length=6, label="重复密码", widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': '再次输入用户名'}))
 
     def clean(self):
         is_username_exist = models.User.objects.filter(user_name=self.cleaned_data.get('user_name')).exists()
@@ -34,8 +41,10 @@ class UserRegisterForm(forms.Form):
 
 
 class UserLoginForm(forms.Form):
-    user_name = forms.CharField(min_length=3, label="用户名")
-    password = forms.CharField(min_length=6, label="密码", widget=forms.PasswordInput())
+    user_name = forms.CharField(min_length=3, label="用户名",
+                                widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '输入用户名'}))
+    password = forms.CharField(min_length=6, label="密码",
+                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '输入密码'}))
 
     def clean(self):
         user_filter = models.User.objects.filter(user_name=self.cleaned_data.get('user_name'))
@@ -49,9 +58,12 @@ class UserLoginForm(forms.Form):
 
 
 class UserChangePasswdForm(forms.Form):
-    old_passwd = forms.CharField(min_length=6, label="旧密码", widget=forms.PasswordInput())
-    new_passwd = forms.CharField(min_length=6, label="新密码", widget=forms.PasswordInput())
-    repeat_new_passwd = forms.CharField(min_length=6, label="重复新密码", widget=forms.PasswordInput())
+    old_passwd = forms.CharField(min_length=6, label="旧密码",
+                                 widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '输入旧密码'}))
+    new_passwd = forms.CharField(min_length=6, label="新密码",
+                                 widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '输入新密码'}))
+    repeat_new_passwd = forms.CharField(min_length=6, label="重复新密码", widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': '再次输入新密码'}))
 
     def clean(self):
         if self.cleaned_data.get('new_passwd') != self.cleaned_data.get('repeat_new_passwd'):

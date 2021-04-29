@@ -86,20 +86,22 @@ def user_change_passwd(request):
 @check_login
 def history_list(request):
     history_obj_list = models.History.objects.filter(
-        user=models.User.objects.get(user_name=request.session.get("user_name")))
+        user=models.User.objects.get(user_name=request.session.get("user_name"))).order_by("-pred_time")
     if request.method == "POST":
         patient_id = request.POST.get('patient_id')
         patient_name = request.POST.get('patient_name')
         if len(patient_id) > 0:
             history_obj_list = models.History.objects.filter(
-                user=models.User.objects.get(user_name=request.session.get("user_name")), patient_id=patient_id)
+                user=models.User.objects.get(user_name=request.session.get("user_name")),
+                patient_id=patient_id).order_by("-pred_time")
         if len(patient_name) > 0:
             history_obj_list = models.History.objects.filter(
-                user=models.User.objects.get(user_name=request.session.get("user_name")), patient_name=patient_name)
+                user=models.User.objects.get(user_name=request.session.get("user_name")),
+                patient_name=patient_name).order_by("-pred_time")
         if len(patient_id) > 0 and len(patient_name) > 0:
             history_obj_list = models.History.objects.filter(
                 user=models.User.objects.get(user_name=request.session.get("user_name")), patient_id=patient_id,
-                patient_name=patient_name)
+                patient_name=patient_name).order_by("-pred_time")
         messages.info(request, "检索成功")
         return render(request, "history_list.html", {"history_obj_list": history_obj_list, "patient_id": patient_id,
                                                      "patient_name": patient_name})

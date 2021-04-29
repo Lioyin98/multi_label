@@ -1,26 +1,32 @@
 {% extends "base.html" %}
 
-{% block bar %}
-      <div class="col-md-9" style=  "justify-content: flex-end;">
-            <h1 class="page-header">欢迎使用</h1>
-        <div class="panel panel-primary">
-                <!-- Default panel contents -->
-        <div class="panel-heading">眼科影像病变体征识别系统<i class="fa fa-thumb-tack pull-right"></i></div>
-            <div  class="panel-body">
-                 <!-
-            </div>
-      </div>
-{% endblock %}
-
-
-
 {% block main %}
-<p>当前登录用户： {{user_name}}</p>
+
+<div class="col-md-8 col-md-offset-2">
+    <h1 class="page-header">首页</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Hello, {{user_name}}!</h1>
+            <p>这里是基于深度学习的眼科影像病变体征识别系统，致力于利用计算机技术识别患者眼科影像中的湿性AMD病变体征，
+                目前支持识别OCT影像和彩色眼底影像中的病变体征，提供交互友好的系统功能，从而辅助医生诊断治疗。
+            </p>
+            <p>
+                本系统使用由ResNeSt50神经网络和数千张眼科影像数据集训练而成的多标签分类模型，经过在测试集上的综合评估后认为：
+                该模型拥有对于OCT影像约75%的体征严格匹配准确率和80%以上的精确率、召回率、F1值，汉明损失约0.03；
+                拥有对于彩色眼底影像约71%的体征严格匹配准确率和73%以上的精确率、召回率、F1值，汉明损失约0.09。
+            </p>
+            <p><a class="btn btn-primary btn-lg" href="/pred/compute/" role="button"><span
+                    class="glyphicon glyphicon-plane"></span> 开始使用！</a></p>
+        </div>
+    </div>
+</div>
+
 {% if messages %}
 <script>
     {% for msg in messages %}
-        alert('{{ msg.message }}');
+    alert('{{ msg.message }}');
     {% endfor %}
 </script>
 {% endif %}
+
 {% endblock %}

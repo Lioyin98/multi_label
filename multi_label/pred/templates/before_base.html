@@ -18,13 +18,13 @@
             font-size: 18px;
         }
 
-        .form-control {
-            margin-bottom: 20px;
+        #before_container {
+            position: relative;
+            top: 15vh;
         }
 
-        .btn-lg {
-            margin-top: 10px;
-            margin-bottom: 10px;
+        .form-control {
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -33,12 +33,9 @@
 <div class="page-header">
     <h1 class="text-center">眼科影像病变体征识别系统</h1>
 </div>
-{% include "nav.html" %}
-
 {% block main%}
 
 {% endblock %}
-
 <div style="position:fixed;bottom:0;left:50%;transform:translateX(-50%);opacity:0.5">
     <span style="font-size: 15px">@author: liguoying</span>
 </div>
